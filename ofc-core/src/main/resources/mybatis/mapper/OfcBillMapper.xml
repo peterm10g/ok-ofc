@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lsh.ofc.core.dao.OfcBillDAO">
+
+    <resultMap id="resultMap" type="OfcBill">
+        <id     property="id"          column="id"           jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="orderId"     column="order_id"     jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="system"      column="system"       jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="outOrderId"  column="out_order_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="billType"    column="bill_type"    jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="billId"      column="bill_id"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="billDetails" column="bill_details" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="billStatus"  column="bill_status"  jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="createdAt"   column="created_at"   jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updatedAt"   column="updated_at"   jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <sql id="columns">
+        id,
+        order_id,
+        system,
+        out_order_id,
+        bill_type,
+        bill_id,
+        bill_details,
+        bill_status,
+        created_at,
+        updated_at
+    </sql>
+
+    <sql id="conditions">
+        <if test="id != null">
+            and id = #{id, jdbcType=BIGINT}
+        </if>
+        <if test="orderId != null">
+            and order_id = #{orderId, jdbcType=BIGINT}
+        </if>
+        <if test="system != null">
+            and system = #{system, jdbcType=VARCHAR}
+        </if>
+        <if test="outOrderId != null">
+            and out_order_id = #{outOrderId, jdbcType=VARCHAR}
+        </if>
+        <if test="billType != null">
+            and bill_type = #{billType, jdbcType=VARCHAR}
+        </if>
+        <if test="billId != null">
+            and bill_id = #{billId, jdbcType=VARCHAR}
+        </if>
+        <if test="billDetails != null">
+            and bill_details = #{billDetails, jdbcType=LONGVARCHAR}
+        </if>
+        <if test="billStatus != null">
+            and bill_status = #{billStatus, jdbcType=VARCHAR}
+        </if>
+        <if test="createdAt != null">
+            and created_at = #{createdAt, jdbcType=INTEGER}
+        </if>
+        <if test="updatedAt != null">
+            and updated_at = #{updatedAt, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="select">
+        select
+        <include refid="columns" />
+        from
+        ofc_bill
+        <where>
+            <include refid="conditions" />
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="OfcBill">
+        insert ignore into ofc_bill
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            id,
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="system != null">
+                system,
+            </if>
+            <if test="outOrderId != null">
+                out_order_id,
+            </if>
+            <if test="billType != null">
+                bill_type,
+            </if>
+            <if test="billId != null">
+                bill_id,
+            </if>
+            <if test="billDetails != null">
+                bill_details,
+            </if>
+            <if test="billStatus != null">
+                bill_status,
+            </if>
+            created_at,
+            updated_at,
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            #{id, jdbcType=BIGINT},
+            <if test="orderId != null">
+                #{orderId, jdbcType=BIGINT},
+            </if>
+            <if test="system != null">
+                #{system, jdbcType=VARCHAR},
+            </if>
+            <if test="outOrderId != null">
+                #{outOrderId, jdbcType=VARCHAR},
+            </if>
+            <if test="billType != null">
+                #{billType, jdbcType=VARCHAR},
+            </if>
+            <if test="billId != null">
+                #{billId, jdbcType=VARCHAR},
+            </if>
+            <if test="billDetails != null">
+                #{billDetails, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="billStatus != null">
+                #{billStatus, jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="createdAt != null">
+                    #{createdAt, jdbcType=INTEGER},
+                    #{createdAt, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="OfcBill">
+        update ofc_bill
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId, jdbcType=BIGINT},
+            </if>
+            <if test="system != null">
+                system = #{system, jdbcType=VARCHAR},
+            </if>
+            <if test="outOrderId != null">
+                out_order_id = #{outOrderId, jdbcType=VARCHAR},
+            </if>
+            <if test="billType != null">
+                bill_type = #{billType, jdbcType=VARCHAR},
+            </if>
+            <if test="billId != null">
+                bill_id = #{billId, jdbcType=VARCHAR},
+            </if>
+            <if test="billDetails != null">
+                bill_details = #{billDetails, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="billStatus != null">
+                bill_status = #{billStatus, jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt, jdbcType=INTEGER},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt, jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByFilter" parameterType="java.util.Map">
+        update ofc_bill
+        <set>
+            <if test="update.orderId != null">
+                order_id = #{update.orderId, jdbcType=BIGINT},
+            </if>
+            <if test="update.system != null">
+                system = #{update.system, jdbcType=VARCHAR},
+            </if>
+            <if test="update.outOrderId != null">
+                out_order_id = #{update.outOrderId, jdbcType=VARCHAR},
+            </if>
+            <if test="update.billType != null">
+                bill_type = #{update.billType, jdbcType=VARCHAR},
+            </if>
+            <if test="update.billId != null">
+                bill_id = #{update.billId, jdbcType=VARCHAR},
+            </if>
+            <if test="update.billDetails != null">
+                bill_details = #{update.billDetails, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="update.billStatus != null">
+                bill_status = #{update.billStatus, jdbcType=VARCHAR},
+            </if>
+            <if test="update.createdAt != null">
+                created_at = #{update.createdAt, jdbcType=INTEGER},
+            </if>
+            <if test="update.updatedAt != null">
+                updated_at = #{update.updatedAt, jdbcType=INTEGER},
+            </if>
+        </set>
+        <where>
+            <if test="expect.id != null">
+                and id = #{expect.id, jdbcType=BIGINT}
+            </if>
+            <if test="expect.orderId != null">
+                and order_id = #{expect.orderId, jdbcType=BIGINT}
+            </if>
+            <if test="expect.system != null">
+                and system = #{expect.system, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.outOrderId != null">
+                and out_order_id = #{expect.outOrderId, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.billType != null">
+                and bill_type = #{expect.billType, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.billId != null">
+                and bill_id = #{expect.billId, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.billDetails != null">
+                and bill_details = #{expect.billDetails, jdbcType=LONGVARCHAR}
+            </if>
+            <if test="expect.billStatus != null">
+                and bill_status = #{expect.billStatus, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.createdAt != null">
+                and created_at = #{expect.createdAt, jdbcType=INTEGER}
+            </if>
+            <if test="expect.updatedAt != null">
+                and updated_at = #{expect.updatedAt, jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from ofc_bill where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFilter" parameterType="OfcBill">
+        delete from ofc_bill
+        <where>
+            <include refid="conditions" />
+        </where>
+    </delete>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="resultMap">
+        select
+          <include refid="columns" />
+        from
+          ofc_bill
+        where
+          id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="OfcBill" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="findList" parameterType="OfcBill" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="count" parameterType="OfcBill" resultType="java.lang.Integer">
+        select
+          count(*)
+        from
+          ofc_bill
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lsh.ofc.core.dao.OfcCustomerDAO">
+
+    <resultMap id="resultMap" type="OfcCustomer">
+        <id     property="id"           column="id"            jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="custCode"     column="cust_code"     jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="custName"     column="cust_name"     jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="regionCode"   column="region_code"   jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="contactName"  column="contact_name"  jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="province"     column="province"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="city"         column="city"          jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="district"     column="district"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="address"      column="address"       jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="location"     column="location"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="mpCustCode"   column="mp_cust_code"  jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="mpCustZone"   column="mp_cust_zone"  jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="ext"          column="ext"           jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="createTime"   column="create_time"   jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updateTime"   column="update_time"   jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="valid"        column="valid"         jdbcType="TINYINT" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <sql id="columns">
+        id,
+        cust_code,
+        cust_name,
+        region_code,
+        contact_name,
+        contact_phone,
+        province,
+        city,
+        district,
+        address,
+        location,
+        mp_cust_code,
+        mp_cust_zone,
+        ext,
+        create_time,
+        update_time,
+        valid
+    </sql>
+
+    <sql id="conditions">
+        <if test="id != null">
+            and id = #{id, jdbcType=BIGINT}
+        </if>
+        <if test="custCode != null">
+            and cust_code = #{custCode, jdbcType=BIGINT}
+        </if>
+        <if test="custName != null">
+            and cust_name = #{custName, jdbcType=VARCHAR}
+        </if>
+        <if test="regionCode != null">
+            and region_code = #{regionCode, jdbcType=INTEGER}
+        </if>
+        <if test="contactName != null">
+            and contact_name = #{contactName, jdbcType=VARCHAR}
+        </if>
+        <if test="contactPhone != null">
+            and contact_phone = #{contactPhone, jdbcType=VARCHAR}
+        </if>
+        <if test="province != null">
+            and province = #{province, jdbcType=VARCHAR}
+        </if>
+        <if test="city != null">
+            and city = #{city, jdbcType=VARCHAR}
+        </if>
+        <if test="district != null">
+            and district = #{district, jdbcType=VARCHAR}
+        </if>
+        <if test="address != null">
+            and address = #{address, jdbcType=VARCHAR}
+        </if>
+        <if test="location != null">
+            and location = #{location, jdbcType=VARCHAR}
+        </if>
+        <if test="mpCustCode != null">
+            and mp_cust_code = #{mpCustCode, jdbcType=VARCHAR}
+        </if>
+        <if test="mpCustZone != null">
+            and mp_cust_zone = #{mpCustZone, jdbcType=VARCHAR}
+        </if>
+        <if test="ext != null">
+            and ext = #{ext, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime, jdbcType=INTEGER}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime, jdbcType=INTEGER}
+        </if>
+        <if test="valid != null">
+            and valid = #{valid, jdbcType=TINYINT}
+        </if>
+    </sql>
+
+    <sql id="select">
+        select
+        <include refid="columns" />
+        from
+        ofc_customer
+        <where>
+            <include refid="conditions" />
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="OfcCustomer">
+        insert into ofc_customer
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            id,
+            <if test="custCode != null">
+                cust_code,
+            </if>
+            <if test="custName != null">
+                cust_name,
+            </if>
+            <if test="regionCode != null">
+                region_code,
+            </if>
+            <if test="contactName != null">
+                contact_name,
+            </if>
+            <if test="contactPhone != null">
+                contact_phone,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="district != null">
+                district,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="mpCustCode != null">
+                mp_cust_code,
+            </if>
+            <if test="mpCustZone != null">
+                mp_cust_zone,
+            </if>
+            <if test="ext != null">
+                ext,
+            </if>
+            create_time,
+            update_time,
+            <if test="valid != null">
+                valid,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            #{id, jdbcType=BIGINT},
+            <if test="custCode != null">
+                #{custCode, jdbcType=BIGINT},
+            </if>
+            <if test="custName != null">
+                #{custName, jdbcType=VARCHAR},
+            </if>
+            <if test="regionCode != null">
+                #{regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="contactName != null">
+                #{contactName, jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                #{contactPhone, jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province, jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city, jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                #{district, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                #{location, jdbcType=VARCHAR},
+            </if>
+            <if test="mpCustCode != null">
+                #{mpCustCode, jdbcType=VARCHAR},
+            </if>
+            <if test="mpCustZone != null">
+                #{mpCustZone, jdbcType=VARCHAR},
+            </if>
+            <if test="ext != null">
+                #{ext, jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="createTime != null">
+                    #{createTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="updateTime != null">
+                    #{updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                #{valid, jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="OfcCustomer">
+        update ofc_customer
+        <set>
+            <if test="custCode != null">
+                cust_code = #{custCode, jdbcType=BIGINT},
+            </if>
+            <if test="custName != null">
+                cust_name = #{custName, jdbcType=VARCHAR},
+            </if>
+            <if test="regionCode != null">
+                region_code = #{regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="contactName != null">
+                contact_name = #{contactName, jdbcType=VARCHAR},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone, jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province, jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city, jdbcType=VARCHAR},
+            </if>
+            <if test="district != null">
+                district = #{district, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                location = #{location, jdbcType=VARCHAR},
+            </if>
+            <if test="mpCustCode != null">
+                mp_cust_code = #{mpCustCode, jdbcType=VARCHAR},
+            </if>
+            <if test="mpCustZone != null">
+                mp_cust_zone = #{mpCustZone, jdbcType=VARCHAR},
+            </if>
+            <if test="ext != null">
+                ext = #{ext, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                valid = #{valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByFilter" parameterType="java.util.Map">
+        update ofc_customer
+        <set>
+            <if test="update.custCode != null">
+                cust_code = #{update.custCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.custName != null">
+                cust_name = #{update.custName, jdbcType=VARCHAR},
+            </if>
+            <if test="update.regionCode != null">
+                region_code = #{update.regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="update.contactName != null">
+                contact_name = #{update.contactName, jdbcType=VARCHAR},
+            </if>
+            <if test="update.contactPhone != null">
+                contact_phone = #{update.contactPhone, jdbcType=VARCHAR},
+            </if>
+            <if test="update.province != null">
+                province = #{update.province, jdbcType=VARCHAR},
+            </if>
+            <if test="update.city != null">
+                city = #{update.city, jdbcType=VARCHAR},
+            </if>
+            <if test="update.district != null">
+                district = #{update.district, jdbcType=VARCHAR},
+            </if>
+            <if test="update.address != null">
+                address = #{update.address, jdbcType=VARCHAR},
+            </if>
+            <if test="update.location != null">
+                location = #{update.location, jdbcType=VARCHAR},
+            </if>
+            <if test="update.mpCustCode != null">
+                mp_cust_code = #{update.mpCustCode, jdbcType=VARCHAR},
+            </if>
+            <if test="update.mpCustZone != null">
+                mp_cust_zone = #{update.mpCustZone, jdbcType=VARCHAR},
+            </if>
+            <if test="update.ext != null">
+                ext = #{update.ext, jdbcType=VARCHAR},
+            </if>
+            <if test="update.createTime != null">
+                create_time = #{update.createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="update.updateTime != null">
+                    update_time = #{update.updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="update.valid != null">
+                valid = #{update.valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        <where>
+            <if test="expect.id != null">
+                and id = #{expect.id, jdbcType=BIGINT}
+            </if>
+            <if test="expect.custCode != null">
+                and cust_code = #{expect.custCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.custName != null">
+                and cust_name = #{expect.custName, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.regionCode != null">
+                and region_code = #{expect.regionCode, jdbcType=INTEGER}
+            </if>
+            <if test="expect.contactName != null">
+                and contact_name = #{expect.contactName, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.contactPhone != null">
+                and contact_phone = #{expect.contactPhone, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.province != null">
+                and province = #{expect.province, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.city != null">
+                and city = #{expect.city, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.district != null">
+                and district = #{expect.district, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.address != null">
+                and address = #{expect.address, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.location != null">
+                and location = #{expect.location, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.mpCustCode != null">
+                and mp_cust_code = #{expect.mpCustCode, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.mpCustZone != null">
+                and mp_cust_zone = #{expect.mpCustZone, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.ext != null">
+                and ext = #{expect.ext, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.createTime != null">
+                and create_time = #{expect.createTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.updateTime != null">
+                and update_time = #{expect.updateTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.valid != null">
+                and valid = #{expect.valid, jdbcType=TINYINT}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from ofc_customer where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFilter" parameterType="OfcCustomer">
+        delete from ofc_customer
+        <where>
+            <include refid="conditions" />
+        </where>
+    </delete>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="resultMap">
+        select
+          <include refid="columns" />
+        from
+          ofc_customer
+        where
+          id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="OfcCustomer" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="findList" parameterType="OfcCustomer" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="count" parameterType="OfcCustomer" resultType="java.lang.Integer">
+        select
+          count(*)
+        from
+          ofc_customer
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+</mapper>

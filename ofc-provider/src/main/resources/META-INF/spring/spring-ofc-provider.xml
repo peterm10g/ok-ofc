@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://code.alibabatech.com/schema/dubbo
+                           http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:property-placeholder location="classpath:props/*.properties" />
+
+    <import resource="classpath*:spring/spring-ofc-core.xml" />
+
+    <dubbo:application name="ofc-provider" owner="lsh-ofc" organization="lsh" />
+
+    <dubbo:registry address="${provider.dubbo.registry.address}" />
+
+    <dubbo:monitor protocol="registry" />
+
+    <dubbo:protocol host="${provider.dubbo.host}" name="dubbo" port="${provider.dubbo.port}" />
+
+    <dubbo:provider threads="500" accepts="500" payload="104857600" timeout="30000" filter="customFilter" delay="-1" retries="0"/>
+
+    <dubbo:protocol name="dubbo" serialization="kryo" optimizer="com.lsh.ofc.api.serialize.SerializationOptimizerImpl" />
+
+    <dubbo:protocol name="rest" port="${provider.rest.port}" contextpath="ofc/api" server="tomcat"
+                    extension="com.lsh.ofc.provider.rest.common.CustomRestFilter,
+                               com.lsh.ofc.provider.rest.common.GlobalExceptionMapper,
+                               com.lsh.ofc.provider.rest.common.ValidationExceptionMapper" />
+
+    <dubbo:annotation package="com.lsh.ofc.provider.service,com.lsh.ofc.provider.rest.service.impl" />
+
+    <bean class="com.lsh123.meipi.ofc.webservice.WSProvider" />
+</beans>

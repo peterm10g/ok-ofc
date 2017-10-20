@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:dd-job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://code.alibabatech.com/schema/dubbo
+                           http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+                           http://www.dangdang.com/schema/ddframe/job
+                           http://www.dangdang.com/schema/ddframe/job/job.xsd">
+
+    <context:property-placeholder location="classpath:props/*.properties" />
+
+    <import resource="classpath*:spring/spring-ofc-core.xml" />
+
+    <context:component-scan base-package="com.lsh.ofc.worker.task" />
+
+    <dubbo:application name="ofc-worker" owner="lsh-ofc" organization="lsh" />
+
+    <bean id="regCenter" class="com.dangdang.ddframe.reg.zookeeper.ZookeeperRegistryCenter" init-method="init">
+        <constructor-arg>
+            <bean class="com.dangdang.ddframe.reg.zookeeper.ZookeeperConfiguration">
+                <property name="serverLists" value="${job.registry.address}" />
+                <property name="namespace" value="ofc-worker" />
+                <property name="baseSleepTimeMilliseconds" value="1000" />
+                <property name="maxSleepTimeMilliseconds" value="3000" />
+                <property name="maxRetries" value="3" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="true"
+                     id="ofcSoCreateJob" class="com.lsh.ofc.worker.task.OfcSoCreateJob"
+                     cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="false"
+                     id="ofcSoMergeJob" class="com.lsh.ofc.worker.task.OfcSoMergeJob"
+                     cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="true"
+                     id="ofcRoCreateJob" class="com.lsh.ofc.worker.task.OfcRoCreateJob"
+                     cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="false"
+                     id="ofcObdMergeJob" class="com.lsh.ofc.worker.task.OfcObdMergeJob"
+                     cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="true"
+                     id="ofcCustomerRefreshJob" class="com.lsh.ofc.worker.task.OfcCustomerRefreshJob"
+                     cron="0/10 * * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:simple registry-center-ref="regCenter"
+                   id="ofcTaskHistoryJob" class="com.lsh.ofc.worker.task.OfcTaskHistoryJob"
+                   cron="0 0 3 * * ?" sharding-total-count="1" sharding-item-parameters="0=A" />
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="true"
+                     id="ofcSoQueryJob" class="com.lsh.ofc.worker.task.OfcSoQueryJob"
+                     cron="0 0/15 * * * ?" sharding-total-count="1" sharding-item-parameters="0=A" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="true"
+                     id="ofcRoQueryJob" class="com.lsh.ofc.worker.task.OfcRoQueryJob"
+                     cron="0 0/15 * * * ?" sharding-total-count="1" sharding-item-parameters="0=A" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:simple registry-center-ref="regCenter"
+                     id="ofcCreateIndexJob" class="com.lsh.ofc.worker.task.OfcCreateIndexJob"
+                     cron="0 0/1 * * * ?" sharding-total-count="1" sharding-item-parameters="0=A" />
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="false"
+                     id="ofcSoValidateJob" class="com.lsh.ofc.worker.task.OfcSoValidateJob"
+                     cron="0 0/10 * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+
+    <dd-job:dataflow registry-center-ref="regCenter" streaming-process="false"
+                     id="ofcCancelValidateJob" class="com.lsh.ofc.worker.task.OfcCancelValidateJob"
+                     cron="0 0/10 * * * ?" sharding-total-count="2" sharding-item-parameters="0=A,1=B" fetch-data-count="100"
+                     process-count-interval-seconds="10" concurrent-data-process-thread-count="10"/>
+</beans>

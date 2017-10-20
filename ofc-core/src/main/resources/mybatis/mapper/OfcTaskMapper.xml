@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lsh.ofc.core.dao.OfcTaskDAO">
+
+    <resultMap id="resultMap" type="OfcTask">
+        <id     property="id"         column="id"          jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="refId"      column="ref_id"      jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="type"       column="type"        jdbcType="TINYINT" javaType="java.lang.Integer" />
+        <result property="status"     column="status"      jdbcType="TINYINT" javaType="java.lang.Integer" />
+        <result property="content"    column="content"     jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="execCount"  column="exec_count"  jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="remark"     column="remark"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="createTime" column="create_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updateTime" column="update_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="valid"      column="valid"       jdbcType="TINYINT" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <sql id="columns">
+        id,
+        ref_id,
+        type,
+        status,
+        content,
+        exec_count,
+        remark,
+        create_time,
+        update_time,
+        valid
+    </sql>
+
+    <sql id="conditions">
+        <if test="id != null">
+            and id = #{id, jdbcType=BIGINT}
+        </if>
+        <if test="refId != null">
+            and ref_id = #{refId, jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and type = #{type, jdbcType=TINYINT}
+        </if>
+        <if test="status != null">
+            and status = #{status, jdbcType=TINYINT}
+        </if>
+        <if test="content != null">
+            and content = #{content, jdbcType=VARCHAR}
+        </if>
+        <if test="execCount != null">
+            and exec_count = #{execCount, jdbcType=INTEGER}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime, jdbcType=INTEGER}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime, jdbcType=INTEGER}
+        </if>
+        <choose>
+            <when test="valid != null">
+                and valid = #{valid, jdbcType=TINYINT}
+            </when>
+            <otherwise>
+                and valid = 1
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="select">
+        select
+        <include refid="columns" />
+        from
+        ofc_task
+        <where>
+            <include refid="conditions" />
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="OfcTask">
+        insert into ofc_task
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            id,
+            <if test="refId != null">
+                ref_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="execCount != null">
+                exec_count,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            create_time,
+            update_time,
+            <if test="valid != null">
+                valid,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            #{id, jdbcType=BIGINT},
+            <if test="refId != null">
+                #{refId, jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type, jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                #{status, jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                #{content, jdbcType=VARCHAR},
+            </if>
+            <if test="execCount != null">
+                #{execCount, jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark, jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="createTime != null">
+                    #{createTime, jdbcType=INTEGER},
+                    #{createTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                #{valid, jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="OfcTask">
+        update ofc_task
+        <set>
+            <if test="refId != null">
+                ref_id = #{refId, jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=TINYINT},
+            </if>
+            <if test="content != null">
+                content = #{content, jdbcType=VARCHAR},
+            </if>
+            <if test="execCount != null">
+                exec_count = #{execCount, jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                valid = #{valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByFilter" parameterType="java.util.Map">
+        update ofc_task
+        <set>
+            <if test="update.refId != null">
+                ref_id = #{update.refId, jdbcType=BIGINT},
+            </if>
+            <if test="update.type != null">
+                type = #{update.type, jdbcType=TINYINT},
+            </if>
+            <if test="update.status != null">
+                status = #{update.status, jdbcType=TINYINT},
+            </if>
+            <if test="update.content != null">
+                content = #{update.content, jdbcType=VARCHAR},
+            </if>
+            <if test="update.execCount != null">
+                exec_count = #{update.execCount, jdbcType=INTEGER},
+            </if>
+            <if test="update.remark != null">
+                remark = #{update.remark, jdbcType=VARCHAR},
+            </if>
+            <if test="update.createTime != null">
+                create_time = #{update.createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="update.updateTime != null">
+                    update_time = #{update.updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="update.valid != null">
+                valid = #{update.valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        <where>
+            <if test="expect.id != null">
+                and id = #{expect.id, jdbcType=BIGINT}
+            </if>
+            <if test="expect.refId != null">
+                and ref_id = #{expect.refId, jdbcType=BIGINT}
+            </if>
+            <if test="expect.type != null">
+                and type = #{expect.type, jdbcType=TINYINT}
+            </if>
+            <if test="expect.status != null">
+                and status = #{expect.status, jdbcType=TINYINT}
+            </if>
+            <if test="expect.content != null">
+                and content = #{expect.content, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.execCount != null">
+                and exec_count = #{expect.execCount, jdbcType=INTEGER}
+            </if>
+            <if test="expect.remark != null">
+                and remark = #{expect.remark, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.createTime != null">
+                and create_time = #{expect.createTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.updateTime != null">
+                and update_time = #{expect.updateTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.valid != null">
+                and valid = #{expect.valid, jdbcType=TINYINT}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from ofc_task where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFilter" parameterType="OfcTask">
+        delete from ofc_task
+        <where>
+            <include refid="conditions" />
+        </where>
+    </delete>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="resultMap">
+        select
+          <include refid="columns" />
+        from
+          ofc_task
+        where
+          id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="OfcTask" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="findList" parameterType="OfcTask" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="count" parameterType="OfcTask" resultType="java.lang.Integer">
+        select
+          count(*)
+        from
+          ofc_task
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+
+    <select id="fetchTasks" parameterType="map" resultMap="resultMap">
+        select
+        <include refid="columns" />
+        from
+          ofc_task
+        where
+            valid = 1
+        and type = #{type, jdbcType=TINYINT}
+        and status in <foreach collection="statuses" item="item" open="(" close=")" separator=",">#{item, jdbcType=TINYINT}</foreach>
+        and exec_count <![CDATA[<]]> 10
+        and id % #{shardingCount, jdbcType=INTEGER} in <foreach collection="shardingItems" item="item" open="(" close=")" separator=",">#{item, jdbcType=INTEGER}</foreach>
+        <if test="delayTime != null">
+            and create_time <![CDATA[<]]> UNIX_TIMESTAMP() - #{delayTime, jdbcType=INTEGER}
+        </if>
+        order by update_time desc
+        limit #{fetchSize, jdbcType=INTEGER}
+    </select>
+
+    <select id="fetchErrorTasks" parameterType="map" resultMap="resultMap">
+        select
+        <include refid="columns" />
+        from
+        ofc_task
+        where
+        valid = 1
+        and type = #{type, jdbcType=TINYINT}
+        and exec_count = 10
+        and status = 3
+        and update_time <![CDATA[>]]> #{startTime, jdbcType=INTEGER}
+    </select>
+
+    <update id="updateProcessedTask" parameterType="map">
+        update
+          ofc_task
+        set
+          status = #{updateStatus, jdbcType=TINYINT},
+          exec_count = exec_count + 1,
+          update_time = UNIX_TIMESTAMP()
+        where
+            id = #{id, jdbcType=BIGINT}
+        and status = #{expectStatus, jdbcType=TINYINT}
+        and exec_count <![CDATA[<]]> 10
+    </update>
+
+    <insert id="insert4History" timeout="120000">
+        insert into ofc_task_history select * from ofc_task where status = #{status, jdbcType=TINYINT} and update_time <![CDATA[<]]> unix_timestamp(curdate());
+    </insert>
+
+    <delete id="delete4History" timeout="120000">
+        delete from ofc_task where status = #{status, jdbcType=TINYINT} and update_time <![CDATA[<]]> unix_timestamp(curdate());
+    </delete>
+</mapper>

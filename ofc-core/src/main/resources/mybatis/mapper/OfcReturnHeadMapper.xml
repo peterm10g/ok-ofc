@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lsh.ofc.core.dao.OfcReturnHeadDAO">
+
+    <resultMap id="resultMap" type="OfcReturnHead">
+        <id     property="id"                column="id"                   jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="orderCode"         column="order_code"           jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="returnCode"        column="return_code"          jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="regionCode"        column="region_code"          jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="addressCode"       column="address_code"         jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="orderAmount"       column="order_amount"         jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result property="orderTime"         column="order_time"           jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="warehouseCode"     column="warehouse_code"       jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="warehouseName"     column="warehouse_name"       jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="totalSkuReturnQty" column="total_sku_return_qty" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result property="ext"               column="ext"                  jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="createTime"        column="create_time"          jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updateTime"        column="update_time"          jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="valid"             column="valid"                jdbcType="TINYINT" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <sql id="columns">
+        id,
+        order_code,
+        return_code,
+        region_code,
+        address_code,
+        order_amount,
+        order_time,
+        warehouse_code,
+        warehouse_name,
+        total_sku_return_qty,
+        ext,
+        create_time,
+        update_time,
+        valid
+    </sql>
+
+    <sql id="conditions">
+        <if test="id != null">
+            and id = #{id, jdbcType=BIGINT}
+        </if>
+        <if test="orderCode != null">
+            and order_code = #{orderCode, jdbcType=BIGINT}
+        </if>
+        <if test="returnCode != null">
+            and return_code = #{returnCode, jdbcType=BIGINT}
+        </if>
+        <if test="regionCode != null">
+            and region_code = #{regionCode, jdbcType=INTEGER}
+        </if>
+        <if test="addressCode != null">
+            and address_code = #{addressCode, jdbcType=BIGINT}
+        </if>
+        <if test="orderAmount != null">
+            and order_amount = #{orderAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="orderTime != null">
+            and order_time = #{orderTime, jdbcType=INTEGER}
+        </if>
+        <if test="warehouseCode != null">
+            and warehouse_code = #{warehouseCode, jdbcType=VARCHAR}
+        </if>
+        <if test="warehouseName != null">
+            and warehouse_name = #{warehouseName, jdbcType=VARCHAR}
+        </if>
+        <if test="totalSkuReturnQty != null">
+            and total_sku_return_qty = #{totalSkuReturnQty, jdbcType=DECIMAL}
+        </if>
+        <if test="ext != null">
+            and ext = #{ext, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime, jdbcType=INTEGER}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime, jdbcType=INTEGER}
+        </if>
+        <choose>
+            <when test="valid != null">
+                and valid = #{valid, jdbcType=TINYINT}
+            </when>
+            <otherwise>
+                and valid = 1
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="select">
+        select
+        <include refid="columns" />
+        from
+        ofc_return_head
+        <where>
+            <include refid="conditions" />
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="OfcReturnHead">
+        insert into ofc_return_head
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            id,
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="returnCode != null">
+                return_code,
+            </if>
+            <if test="regionCode != null">
+                region_code,
+            </if>
+            <if test="addressCode != null">
+                address_code,
+            </if>
+            <if test="orderAmount != null">
+                order_amount,
+            </if>
+            <if test="orderTime != null">
+                order_time,
+            </if>
+            <if test="warehouseCode != null">
+                warehouse_code,
+            </if>
+            <if test="warehouseName != null">
+                warehouse_name,
+            </if>
+            <if test="totalSkuReturnQty != null">
+                total_sku_return_qty,
+            </if>
+            <if test="ext != null">
+                ext,
+            </if>
+            create_time,
+            update_time,
+            <if test="valid != null">
+                valid,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            #{id, jdbcType=BIGINT},
+            <if test="orderCode != null">
+                #{orderCode, jdbcType=BIGINT},
+            </if>
+            <if test="returnCode != null">
+                #{returnCode, jdbcType=BIGINT},
+            </if>
+            <if test="regionCode != null">
+                #{regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="addressCode != null">
+                #{addressCode, jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                #{orderAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="orderTime != null">
+                #{orderTime, jdbcType=INTEGER},
+            </if>
+            <if test="warehouseCode != null">
+                #{warehouseCode, jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseName != null">
+                #{warehouseName, jdbcType=VARCHAR},
+            </if>
+            <if test="totalSkuReturnQty != null">
+                #{totalSkuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="ext != null">
+                #{ext, jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="createTime != null">
+                    #{createTime, jdbcType=INTEGER},
+                    #{createTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                #{valid, jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="OfcReturnHead">
+        update ofc_return_head
+        <set>
+            <if test="orderCode != null">
+                order_code = #{orderCode, jdbcType=BIGINT},
+            </if>
+            <if test="returnCode != null">
+                return_code = #{returnCode, jdbcType=BIGINT},
+            </if>
+            <if test="regionCode != null">
+                region_code = #{regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="addressCode != null">
+                address_code = #{addressCode, jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                order_amount = #{orderAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="orderTime != null">
+                order_time = #{orderTime, jdbcType=INTEGER},
+            </if>
+            <if test="warehouseCode != null">
+                warehouse_code = #{warehouseCode, jdbcType=VARCHAR},
+            </if>
+            <if test="warehouseName != null">
+                warehouse_name = #{warehouseName, jdbcType=VARCHAR},
+            </if>
+            <if test="totalSkuReturnQty != null">
+                total_sku_return_qty = #{totalSkuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="ext != null">
+                ext = #{ext, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="valid != null">
+                valid = #{valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByFilter" parameterType="java.util.Map">
+        update ofc_return_head
+        <set>
+            <if test="update.orderCode != null">
+                order_code = #{update.orderCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.returnCode != null">
+                return_code = #{update.returnCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.regionCode != null">
+                region_code = #{update.regionCode, jdbcType=INTEGER},
+            </if>
+            <if test="update.addressCode != null">
+                address_code = #{update.addressCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.orderAmount != null">
+                order_amount = #{update.orderAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="update.orderTime != null">
+                order_time = #{update.orderTime, jdbcType=INTEGER},
+            </if>
+            <if test="update.warehouseCode != null">
+                warehouse_code = #{update.warehouseCode, jdbcType=VARCHAR},
+            </if>
+            <if test="update.warehouseName != null">
+                warehouse_name = #{update.warehouseName, jdbcType=VARCHAR},
+            </if>
+            <if test="update.totalSkuReturnQty != null">
+                total_sku_return_qty = #{update.totalSkuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="update.ext != null">
+                ext = #{update.ext, jdbcType=VARCHAR},
+            </if>
+            <if test="update.createTime != null">
+                create_time = #{update.createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="update.updateTime != null">
+                    update_time = #{update.updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+            <if test="update.valid != null">
+                valid = #{update.valid, jdbcType=TINYINT},
+            </if>
+        </set>
+        <where>
+            <if test="expect.id != null">
+                and id = #{expect.id, jdbcType=BIGINT}
+            </if>
+            <if test="expect.orderCode != null">
+                and order_code = #{expect.orderCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.returnCode != null">
+                and return_code = #{expect.returnCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.regionCode != null">
+                and region_code = #{expect.regionCode, jdbcType=INTEGER}
+            </if>
+            <if test="expect.addressCode != null">
+                and address_code = #{expect.addressCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.orderAmount != null">
+                and order_amount = #{expect.orderAmount, jdbcType=DECIMAL}
+            </if>
+            <if test="expect.orderTime != null">
+                and order_time = #{expect.orderTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.warehouseCode != null">
+                and warehouse_code = #{expect.warehouseCode, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.warehouseName != null">
+                and warehouse_name = #{expect.warehouseName, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.totalSkuReturnQty != null">
+                and total_sku_return_qty = #{expect.totalSkuReturnQty, jdbcType=DECIMAL}
+            </if>
+            <if test="expect.ext != null">
+                and ext = #{expect.ext, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.createTime != null">
+                and create_time = #{expect.createTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.updateTime != null">
+                and update_time = #{expect.updateTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.valid != null">
+                and valid = #{expect.valid, jdbcType=TINYINT}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from ofc_return_head where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFilter" parameterType="OfcReturnHead">
+        delete from ofc_return_head
+        <where>
+            <include refid="conditions" />
+        </where>
+    </delete>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="resultMap">
+        select
+          <include refid="columns" />
+        from
+          ofc_return_head
+        where
+          id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="OfcReturnHead" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="findList" parameterType="OfcReturnHead" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="count" parameterType="OfcReturnHead" resultType="java.lang.Integer">
+        select
+          count(*)
+        from
+          ofc_return_head
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+</mapper>

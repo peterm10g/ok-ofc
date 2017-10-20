@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lsh.ofc.core.dao.OfcRoDetailDAO">
+
+    <resultMap id="resultMap" type="OfcRoDetail">
+        <id     property="id"            column="id"              jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="roBillCode"    column="ro_bill_code"    jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="itemNo"        column="item_no"         jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="goodsCode"     column="goods_code"      jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="goodsName"     column="goods_name"      jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="goodsSaleUnit" column="goods_sale_unit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="goodsPrice"    column="goods_price"     jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result property="goodsAmount"   column="goods_amount"    jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result property="skuCode"       column="sku_code"        jdbcType="BIGINT"  javaType="java.lang.Long" />
+        <result property="skuSupplyCode" column="sku_supply_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="skuReturnQty"  column="sku_return_qty"  jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+        <result property="ext"           column="ext"             jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result property="createTime"    column="create_time"     jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <result property="updateTime"    column="update_time"     jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </resultMap>
+
+    <sql id="columns">
+        id,
+        ro_bill_code,
+        item_no,
+        goods_code,
+        goods_name,
+        goods_sale_unit,
+        goods_price,
+        goods_amount,
+        sku_code,
+        sku_supply_code,
+        sku_return_qty,
+        ext,
+        create_time,
+        update_time
+    </sql>
+
+    <sql id="conditions">
+        <if test="id != null">
+            and id = #{id, jdbcType=BIGINT}
+        </if>
+        <if test="roBillCode != null">
+            and ro_bill_code = #{roBillCode, jdbcType=VARCHAR}
+        </if>
+        <if test="itemNo != null">
+            and item_no = #{itemNo, jdbcType=INTEGER}
+        </if>
+        <if test="goodsCode != null">
+            and goods_code = #{goodsCode, jdbcType=BIGINT}
+        </if>
+        <if test="goodsName != null">
+            and goods_name = #{goodsName, jdbcType=VARCHAR}
+        </if>
+        <if test="goodsSaleUnit != null">
+            and goods_sale_unit = #{goodsSaleUnit, jdbcType=INTEGER}
+        </if>
+        <if test="goodsPrice != null">
+            and goods_price = #{goodsPrice, jdbcType=DECIMAL}
+        </if>
+        <if test="goodsAmount != null">
+            and goods_amount = #{goodsAmount, jdbcType=DECIMAL}
+        </if>
+        <if test="skuCode != null">
+            and sku_code = #{skuCode, jdbcType=BIGINT}
+        </if>
+        <if test="skuSupplyCode != null">
+            and sku_supply_code = #{skuSupplyCode, jdbcType=VARCHAR}
+        </if>
+        <if test="skuReturnQty != null">
+            and sku_return_qty = #{skuReturnQty, jdbcType=DECIMAL}
+        </if>
+        <if test="ext != null">
+            and ext = #{ext, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime, jdbcType=INTEGER}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime, jdbcType=INTEGER}
+        </if>
+    </sql>
+
+    <sql id="select">
+        select
+        <include refid="columns" />
+        from
+        ofc_ro_detail
+        <where>
+            <include refid="conditions" />
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="OfcRoDetail">
+        insert into ofc_ro_detail
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            id,
+            <if test="roBillCode != null">
+                ro_bill_code,
+            </if>
+            <if test="itemNo != null">
+                item_no,
+            </if>
+            <if test="goodsCode != null">
+                goods_code,
+            </if>
+            <if test="goodsName != null">
+                goods_name,
+            </if>
+            <if test="goodsSaleUnit != null">
+                goods_sale_unit,
+            </if>
+            <if test="goodsPrice != null">
+                goods_price,
+            </if>
+            <if test="goodsAmount != null">
+                goods_amount,
+            </if>
+            <if test="skuCode != null">
+                sku_code,
+            </if>
+            <if test="skuSupplyCode != null">
+                sku_supply_code,
+            </if>
+            <if test="skuReturnQty != null">
+                sku_return_qty,
+            </if>
+            <if test="ext != null">
+                ext,
+            </if>
+            create_time,
+            update_time,
+        </trim>
+        values
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            #{id, jdbcType=BIGINT},
+            <if test="roBillCode != null">
+                #{roBillCode, jdbcType=VARCHAR},
+            </if>
+            <if test="itemNo != null">
+                #{itemNo, jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                #{goodsCode, jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                #{goodsName, jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSaleUnit != null">
+                #{goodsSaleUnit, jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                #{goodsPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="goodsAmount != null">
+                #{goodsAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="skuCode != null">
+                #{skuCode, jdbcType=BIGINT},
+            </if>
+            <if test="skuSupplyCode != null">
+                #{skuSupplyCode, jdbcType=VARCHAR},
+            </if>
+            <if test="skuReturnQty != null">
+                #{skuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="ext != null">
+                #{ext, jdbcType=VARCHAR},
+            </if>
+            <choose>
+                <when test="createTime != null">
+                    #{createTime, jdbcType=INTEGER},
+                    #{createTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    UNIX_TIMESTAMP(),
+                    UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="OfcRoDetail">
+        update ofc_ro_detail
+        <set>
+            <if test="roBillCode != null">
+                ro_bill_code = #{roBillCode, jdbcType=VARCHAR},
+            </if>
+            <if test="itemNo != null">
+                item_no = #{itemNo, jdbcType=INTEGER},
+            </if>
+            <if test="goodsCode != null">
+                goods_code = #{goodsCode, jdbcType=BIGINT},
+            </if>
+            <if test="goodsName != null">
+                goods_name = #{goodsName, jdbcType=VARCHAR},
+            </if>
+            <if test="goodsSaleUnit != null">
+                goods_sale_unit = #{goodsSaleUnit, jdbcType=INTEGER},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="goodsAmount != null">
+                goods_amount = #{goodsAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="skuCode != null">
+                sku_code = #{skuCode, jdbcType=BIGINT},
+            </if>
+            <if test="skuSupplyCode != null">
+                sku_supply_code = #{skuSupplyCode, jdbcType=VARCHAR},
+            </if>
+            <if test="skuReturnQty != null">
+                sku_return_qty = #{skuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="ext != null">
+                ext = #{ext, jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="updateTime != null">
+                    update_time = #{updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByFilter" parameterType="java.util.Map">
+        update ofc_ro_detail
+        <set>
+            <if test="update.roBillCode != null">
+                ro_bill_code = #{update.roBillCode, jdbcType=VARCHAR},
+            </if>
+            <if test="update.itemNo != null">
+                item_no = #{update.itemNo, jdbcType=INTEGER},
+            </if>
+            <if test="update.goodsCode != null">
+                goods_code = #{update.goodsCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.goodsName != null">
+                goods_name = #{update.goodsName, jdbcType=VARCHAR},
+            </if>
+            <if test="update.goodsSaleUnit != null">
+                goods_sale_unit = #{update.goodsSaleUnit, jdbcType=INTEGER},
+            </if>
+            <if test="update.goodsPrice != null">
+                goods_price = #{update.goodsPrice, jdbcType=DECIMAL},
+            </if>
+            <if test="update.goodsAmount != null">
+                goods_amount = #{update.goodsAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="update.skuCode != null">
+                sku_code = #{update.skuCode, jdbcType=BIGINT},
+            </if>
+            <if test="update.skuSupplyCode != null">
+                sku_supply_code = #{update.skuSupplyCode, jdbcType=VARCHAR},
+            </if>
+            <if test="update.skuReturnQty != null">
+                sku_return_qty = #{update.skuReturnQty, jdbcType=DECIMAL},
+            </if>
+            <if test="update.ext != null">
+                ext = #{update.ext, jdbcType=VARCHAR},
+            </if>
+            <if test="update.createTime != null">
+                create_time = #{update.createTime, jdbcType=INTEGER},
+            </if>
+            <choose>
+                <when test="update.updateTime != null">
+                    update_time = #{update.updateTime, jdbcType=INTEGER},
+                </when>
+                <otherwise>
+                    update_time = UNIX_TIMESTAMP(),
+                </otherwise>
+            </choose>
+        </set>
+        <where>
+            <if test="expect.id != null">
+                and id = #{expect.id, jdbcType=BIGINT}
+            </if>
+            <if test="expect.roBillCode != null">
+                and ro_bill_code = #{expect.roBillCode, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.itemNo != null">
+                and item_no = #{expect.itemNo, jdbcType=INTEGER}
+            </if>
+            <if test="expect.goodsCode != null">
+                and goods_code = #{expect.goodsCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.goodsName != null">
+                and goods_name = #{expect.goodsName, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.goodsSaleUnit != null">
+                and goods_sale_unit = #{expect.goodsSaleUnit, jdbcType=INTEGER}
+            </if>
+            <if test="expect.goodsPrice != null">
+                and goods_price = #{expect.goodsPrice, jdbcType=DECIMAL}
+            </if>
+            <if test="expect.goodsAmount != null">
+                and goods_amount = #{expect.goodsAmount, jdbcType=DECIMAL}
+            </if>
+            <if test="expect.skuCode != null">
+                and sku_code = #{expect.skuCode, jdbcType=BIGINT}
+            </if>
+            <if test="expect.skuSupplyCode != null">
+                and sku_supply_code = #{expect.skuSupplyCode, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.skuReturnQty != null">
+                and sku_return_qty = #{expect.skuReturnQty, jdbcType=DECIMAL}
+            </if>
+            <if test="expect.ext != null">
+                and ext = #{expect.ext, jdbcType=VARCHAR}
+            </if>
+            <if test="expect.createTime != null">
+                and create_time = #{expect.createTime, jdbcType=INTEGER}
+            </if>
+            <if test="expect.updateTime != null">
+                and update_time = #{expect.updateTime, jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from ofc_ro_detail where id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByFilter" parameterType="OfcRoDetail">
+        delete from ofc_ro_detail
+        <where>
+            <include refid="conditions" />
+        </where>
+    </delete>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="resultMap">
+        select
+          <include refid="columns" />
+        from
+          ofc_ro_detail
+        where
+          id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="OfcRoDetail" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="findList" parameterType="OfcRoDetail" resultMap="resultMap">
+        <include refid="select" />
+    </select>
+
+    <select id="count" parameterType="OfcRoDetail" resultType="java.lang.Integer">
+        select
+          count(*)
+        from
+          ofc_ro_detail
+        <where>
+            <include refid="conditions" />
+        </where>
+    </select>
+</mapper>

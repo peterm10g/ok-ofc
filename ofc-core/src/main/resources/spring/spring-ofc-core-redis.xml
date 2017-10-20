@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="minIdle" value="${redis.pool.minIdle}" />
+        <property name="maxIdle" value="${redis.pool.maxIdle}" />
+        <property name="maxTotal" value="${redis.pool.maxTotal}" />
+        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+        <property name="testOnCreate" value="${redis.pool.testOnCreate}" />
+        <property name="testOnReturn" value="${redis.pool.testOnReturn}" />
+    </bean>
+
+    <bean id="redisTemplate" class="com.lsh.ofc.core.redis.RedisTemplate">
+        <property name="config" ref="jedisPoolConfig" />
+        <property name="shards">
+            <array>
+                <bean class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="${redis.host}" />
+                    <constructor-arg name="port" value="${redis.port}" />
+                    <constructor-arg name="name" value="${redis.name}" />
+                    <constructor-arg name="timeout" value="${redis.timeout}" />
+                    <property name="password" value="${redis.password}" />
+                </bean>
+            </array>
+        </property>
+    </bean>
+</beans>

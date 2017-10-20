@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                           http://code.alibabatech.com/schema/dubbo
+                           http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:component-scan base-package="com.lsh.ofc.proxy.service,com.lsh.ofc.proxy.dao" />
+
+    <dubbo:registry id="atpRegistry" address="${atp.dubbo.registry.address}" check="false" />
+
+    <dubbo:reference registry="atpRegistry" id="holdDatailQueryRPCService" interface="com.lsh.atp.api.service.hold.IHoldDatailQueryRPCService" check="false" />
+
+    <dubbo:registry id="omsRegistry" address="${oms.dubbo.registry.address}" check="false" />
+
+    <dubbo:reference registry="omsRegistry" id="updateStatusService" interface="com.lsh.oms.api.service.status.IUpdateStatusRpcService" check="false" />
+
+    <!--<dubbo:reference registry="omsRegistry" id="findOrderRpcService" interface="com.lsh.oms.api.service.query.IFindOrderService" check="false" />-->
+
+    <dubbo:reference registry="omsRegistry" id="esRpcService" interface="com.lsh.oms.api.service.es.EsSyncInterface" check="false" />
+
+    <bean id="baseDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="${base.db.driver}"/>
+        <property name="jdbcUrl" value="${base.db.url}"/>
+        <property name="username" value="${base.db.username}"/>
+        <property name="password" value="${base.db.password}"/>
+        <property name="idleConnectionTestPeriodInMinutes" value="${idleConnectionTestPeriodInMinutes}"/>
+        <property name="idleMaxAgeInMinutes" value="${idleMaxAgeInMinutes}"/>
+        <property name="maxConnectionsPerPartition" value="${maxConnectionsPerPartition}"/>
+        <property name="minConnectionsPerPartition" value="${minConnectionsPerPartition}"/>
+        <property name="partitionCount" value="${partitionCount}"/>
+        <property name="acquireIncrement" value="${acquireIncrement}"/>
+        <property name="statementsCacheSize" value="${statementsCacheSize}"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+
+    <bean id="baseNamedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="baseDataSource"/>
+    </bean>
+
+</beans>
